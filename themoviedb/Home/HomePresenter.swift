@@ -14,6 +14,7 @@ import UIKit
 
 protocol HomePresentationLogic {
     func presentUI(response: Home.UI.Response)
+    func presentActionSheet(response: Home.ActionSheet.Response)
 }
 
 class HomePresenter: HomePresentationLogic {
@@ -21,7 +22,14 @@ class HomePresenter: HomePresentationLogic {
 
     // MARK: Do something
     func presentUI(response: Home.UI.Response) {
-        let viewModel = Home.UI.ViewModel()
+        let viewModel = Home.UI.ViewModel(movies: response.movies)
         viewController?.displayUI(viewModel: viewModel)
+    }
+
+    func presentActionSheet(response: Home.ActionSheet.Response) {
+        let viewModel = Home.ActionSheet.ViewModel(title: response.title,
+                                                 message: response.message,
+                                                 options: response.options)
+        viewController?.displayActionSheet(viewModel: viewModel)
     }
 }

@@ -13,27 +13,34 @@
 import UIKit
 
 protocol HomeBusinessLogic {
-    func displayUI(request: Home.UI.Request)
+    func displayUI(request: Home.UI.Request) /// Display movies order by top rated or popular. popular is default
+    func displayActionSheet(request: Home.ActionSheet.Request) /// Display action sheet for choose filter by top rated or popular
+    func refreshMovies(title: String) /// refresh current display for selection on action sheet
 }
 
-protocol HomeDataStore
-{
-    //var name: String { get set }
-}
+protocol HomeDataStore {}
 
-class HomeInteractor: HomeBusinessLogic, HomeDataStore
-{
+class HomeInteractor: HomeBusinessLogic, HomeDataStore {
+
     var presenter: HomePresentationLogic?
-    var worker: HomeWorker?
-    //var name: String = ""
-
-    // MARK: Do something
+    var worker = HomeWorker(homeStore: homeStore())
+    let orderByOptions = ["Popular", "Top rated"]
 
     func displayUI(request: Home.UI.Request) {
-//        worker = HomeWorker()
-//        worker?.doSomeWork()
+        worker.fetchMovie(order: request.order) { (movies) in
+            let response = Home.UI.Response(movies: movies)
+            self.presenter?.presentUI(response: response)
+        }
+    }
 
-        let response = Home.UI.Response()
-        presenter?.presentUI(response: response)
+    func displayActionSheet(request: Home.ActionSheet.Request) {
+        let response = Home.ActionSheet.Response(title: "Order by",
+                                                 message: "Choose a filter",
+                                                 options: orderByOptions)
+        self.presenter?.presentActionSheet(response: response)
+    }
+
+    func refreshMovies(title: String) {
+        displayUI(request: Home.UI.Request(order: orderBy(rawValue: title) ?? .popular))
     }
 }

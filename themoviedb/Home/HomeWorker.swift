@@ -11,10 +11,43 @@
 //
 
 import UIKit
+import Alamofire
 
-class HomeWorker
-{
-  func doSomeWork()
-  {
-  }
+protocol HomeStoreProtocol {
+    func fetchMovie(order: orderBy, completionHandler: @escaping (_ orders: [MovieModel]) -> Void)
+}
+
+class HomeWorker {
+    let store: HomeStoreProtocol
+    init(homeStore: HomeStoreProtocol) {
+        store = homeStore
+    }
+
+    func fetchMovie(order: orderBy, completionHandler: @escaping (_ orders: [MovieModel]) -> Void) {
+        store.fetchMovie(order: order, completionHandler: completionHandler)
+    }
+}
+
+class homeStore: HomeStoreProtocol {
+    func fetchMovie(order: orderBy, completionHandler: @escaping  ([MovieModel]) -> Void) {
+        AF.request(order.stringUrl).responseJSON { response in
+            switch response.result {
+            case .success:
+                if let data = response.data {
+                    do {
+                        let response = try  JSONDecoder().decode(ResponseMovieDB.self, from: data)
+                        completionHandler(response.results)
+                    } catch let jsonError {
+                        print(jsonError.localizedDescription)
+                        completionHandler([])
+                    }
+                } else {
+                    completionHandler([])
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler([])
+            }
+        }
+    }
 }

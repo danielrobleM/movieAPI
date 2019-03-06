@@ -12,11 +12,46 @@
 
 import UIKit
 
+enum orderBy: String{
+    case popular = "Popular"
+    case topRated = "Top rated"
+    static let allValues = [popular, topRated]
+
+    var stringUrl: String {
+        switch self {
+        case .topRated:
+            return "https://api.themoviedb.org/3/movie/top_rated?api_key=34738023d27013e6d1b995443764da44"
+        default:
+            return "https://api.themoviedb.org/3/movie/popular?api_key=34738023d27013e6d1b995443764da44"
+        }
+    }
+}
+
 enum Home {
     // MARK: UI
     enum UI {
-        struct Request { }
-        struct Response { }
-        struct ViewModel { }
+        struct Request {
+            let order: orderBy
+        }
+        struct Response {
+            let movies: [MovieModel]
+        }
+        struct ViewModel {
+            let movies: [MovieModel]
+        }
+    }
+
+    enum ActionSheet {
+        struct Request {}
+        struct Response {
+            let title: String
+            let message: String
+            let options: [String]
+        }
+        struct ViewModel {
+            let title: String
+            let message: String
+            let options: [String]
+        }
     }
 }
