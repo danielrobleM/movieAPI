@@ -40,6 +40,24 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    let voteAverageLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = NSTextAlignment.left
+        label.textColor = UIColor(red:0.75, green:0.75, blue:0.75, alpha:1.00)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        return label
+    }()
+
+    let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("More info", for: .normal)
+        button.layer.cornerRadius = 8
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        button.backgroundColor = UIColor(red:0.85, green:0.21, blue:0.22, alpha:1.00)
+        return button
+    }()
+
     let separator: CALayer = {
         let layer = CALayer()
         layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1).cgColor
@@ -75,7 +93,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(posterImageView.snp.trailing).offset(15)
-            make.top.equalTo(posterImageView.snp.top).offset(15)
+            make.top.equalTo(posterImageView.snp.top)
             make.trailing.equalToSuperview().offset(-15)
         }
         contentView.addSubview(releaseDateLabel)
@@ -85,6 +103,21 @@ final class MovieCollectionViewCell: UICollectionViewCell {
             make.trailing.equalToSuperview().offset(-15)
             make.height.equalTo(17)
         }
+        contentView.addSubview(voteAverageLabel)
+        voteAverageLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(posterImageView.snp.trailing).offset(15)
+            make.top.equalTo(releaseDateLabel.snp.bottom)
+            make.trailing.equalToSuperview().offset(-15)
+            make.height.equalTo(17)
+        }
+        contentView.addSubview(moreInfoButton)
+        moreInfoButton.snp.makeConstraints { (make) in
+            make.leading.equalTo(posterImageView.snp.trailing).offset(15)
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.height.equalTo(35)
+            make.bottom.equalTo(posterImageView.snp.bottom)
+        }
         contentView.layer.addSublayer(separator)
+
     }
 }

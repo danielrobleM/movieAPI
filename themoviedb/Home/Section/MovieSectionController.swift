@@ -38,6 +38,8 @@ extension MovieSectionController {
 
         cell.titleLabel.text = movie.title
         cell.releaseDateLabel.text = movie.releaseDate
+        cell.voteAverageLabel.text = movie.voteAverage.description
+
         if let url = movie.getImageURL() {
             cell.posterImageView.sd_setImage(with: url, completed: nil)
         }

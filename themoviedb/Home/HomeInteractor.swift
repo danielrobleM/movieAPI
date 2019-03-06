@@ -21,7 +21,6 @@ protocol HomeBusinessLogic {
 protocol HomeDataStore {}
 
 class HomeInteractor: HomeBusinessLogic, HomeDataStore {
-
     var presenter: HomePresentationLogic?
     var worker = HomeWorker(homeStore: homeStore())
     let orderByOptions = ["Popular", "Top rated"]
