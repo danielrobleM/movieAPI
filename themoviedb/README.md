@@ -15,3 +15,6 @@ Consideraciones:
 - Utilize git y su cuenta en github, gitlab o bitbucket para disponibilizar el codigo fuente para revisión.
 - El código fuente debe quedar almacenado en un repositorio público para Git, el cual nos debes compartir.
 - Considerar el correcto uso de recursos para no sobrecargar la App
+
+## Install 
+ `run pod install`

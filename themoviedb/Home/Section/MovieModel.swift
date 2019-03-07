@@ -16,6 +16,7 @@ final class MovieModel: NSObject, Codable {
     var posterURL: String = ""
     var voteAverage: Float = 0.0
     var releaseDate: String = ""
+    var overview: String = ""
 
     private enum MovieModelKey: String, CodingKey {
         case id = "id"
@@ -23,15 +24,17 @@ final class MovieModel: NSObject, Codable {
         case posterURL = "poster_path"
         case voteAverage = "vote_average"
         case releaseDate = "release_date"
+        case overview = "overview"
     }
 
-    convenience init(id: Int, title: String, posterURL: String, voteAverage: Float, releaseDate: String) {
+    convenience init(id: Int, title: String, posterURL: String, voteAverage: Float, releaseDate: String, overview: String) {
         self.init()
         self.id = id
         self.title = title
         self.posterURL = posterURL
         self.voteAverage = voteAverage
         self.releaseDate = releaseDate
+        self.overview = overview
     }
 
     convenience required init(from decoder: Decoder) throws {
@@ -41,7 +44,8 @@ final class MovieModel: NSObject, Codable {
         let posterURL = try container.decode(String.self, forKey: .posterURL)
         let voteAverage = try container.decode(Float.self, forKey: .voteAverage)
         let releaseDate = try container.decode(String.self, forKey: .releaseDate)
-        self.init(id: id, title: title, posterURL: posterURL, voteAverage: voteAverage, releaseDate: releaseDate)
+        let overview = try container.decode(String.self, forKey: .overview)
+        self.init(id: id, title: title, posterURL: posterURL, voteAverage: voteAverage, releaseDate: releaseDate, overview: overview)
     }
 
     required override init() {

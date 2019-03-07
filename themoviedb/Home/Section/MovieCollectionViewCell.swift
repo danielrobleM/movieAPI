@@ -10,9 +10,14 @@
 import UIKit
 import SnapKit
 
+protocol MovieCollectionViewDelegate: class {
+    func movieCellDidTapMoreInfoButton(_ cell: MovieCollectionViewCell)
+}
+
 final class MovieCollectionViewCell: UICollectionViewCell {
 
     fileprivate static let insets = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 15)
+    weak var delegate: MovieCollectionViewDelegate?
 
     let posterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -48,13 +53,14 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    let moreInfoButton: UIButton = {
+    fileprivate lazy var moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("More info", for: .normal)
         button.layer.cornerRadius = 8
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         button.backgroundColor = UIColor(red:0.85, green:0.21, blue:0.22, alpha:1.00)
+        button.addTarget(self, action: #selector(MovieCollectionViewCell.onPressedMoreInfo(_:)), for: .touchUpInside)
         return button
     }()
 
@@ -83,41 +89,45 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     }
 
     func makeUI() {
+        let margin = MovieCollectionViewCell.insets.left
         contentView.addSubview(posterImageView)
         posterImageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(15)
-            make.leading.equalToSuperview().offset(15)
-            make.bottom.equalToSuperview().inset(15)
-            make.width.equalTo(contentView.frame.height - 30)
+            make.top.equalToSuperview().offset(margin)
+            make.leading.equalToSuperview().offset(margin)
+            make.bottom.equalToSuperview().inset(margin)
+            make.width.equalTo(contentView.frame.height - margin*2)
         }
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(posterImageView.snp.trailing).offset(15)
+            make.leading.equalTo(posterImageView.snp.trailing).offset(margin)
             make.top.equalTo(posterImageView.snp.top)
-            make.trailing.equalToSuperview().offset(-15)
+            make.trailing.equalToSuperview().offset(-margin)
         }
         contentView.addSubview(releaseDateLabel)
         releaseDateLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(posterImageView.snp.trailing).offset(15)
+            make.leading.equalTo(posterImageView.snp.trailing).offset(margin)
             make.top.equalTo(titleLabel.snp.bottom)
-            make.trailing.equalToSuperview().offset(-15)
+            make.trailing.equalToSuperview().offset(-margin)
             make.height.equalTo(17)
         }
         contentView.addSubview(voteAverageLabel)
         voteAverageLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(posterImageView.snp.trailing).offset(15)
+            make.leading.equalTo(posterImageView.snp.trailing).offset(margin)
             make.top.equalTo(releaseDateLabel.snp.bottom)
-            make.trailing.equalToSuperview().offset(-15)
+            make.trailing.equalToSuperview().offset(-margin)
             make.height.equalTo(17)
         }
         contentView.addSubview(moreInfoButton)
         moreInfoButton.snp.makeConstraints { (make) in
-            make.leading.equalTo(posterImageView.snp.trailing).offset(15)
+            make.leading.equalTo(posterImageView.snp.trailing).offset(margin)
             make.width.equalToSuperview().multipliedBy(0.2)
             make.height.equalTo(35)
             make.bottom.equalTo(posterImageView.snp.bottom)
         }
         contentView.layer.addSublayer(separator)
+    }
 
+    @objc func onPressedMoreInfo(_ button: UIButton) {
+        delegate?.movieCellDidTapMoreInfoButton(self)
     }
 }

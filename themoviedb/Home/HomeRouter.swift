@@ -11,9 +11,10 @@
 //
 
 import UIKit
+import FloatingPanel
 
 @objc protocol HomeRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToMovieDetail(movie: MovieModel)
 }
 
 protocol HomeDataPassing {
@@ -25,33 +26,20 @@ class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     var dataStore: HomeDataStore?
 
     // MARK: Routing
+    func routeToMovieDetail(movie: MovieModel) {
+        let contentViewController = DetailMovieViewController()
+        contentViewController.router?.dataStore?.movie = movie
 
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-    //{
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
+//        let floatVC = FloatingPanelController()
+//        floatVC.delegate = viewController!.self
+//
+//        floatVC.set(contentViewController: contentViewController)
+//
+//        //
+//        floatVC.isRemovalInteractionEnabled = true
 
-    // MARK: Navigation
+        contentViewController.modalPresentationStyle = .overCurrentContext
 
-    //func navigateToSomewhere(source: HomeViewController, destination: SomewhereViewController)
-    //{
-    //  source.show(destination, sender: nil)
-    //}
-
-    // MARK: Passing data
-
-    //func passDataToSomewhere(source: HomeDataStore, destination: inout SomewhereDataStore)
-    //{
-    //  destination.name = source.name
-    //}
+        viewController?.present(contentViewController, animated: true, completion: nil)
+    }
 }

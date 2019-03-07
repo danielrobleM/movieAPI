@@ -12,6 +12,7 @@
 
 import UIKit
 import IGListKit
+import FloatingPanel
 
 protocol HomeDisplayLogic: class {
     func displayUI(viewModel: Home.UI.ViewModel)
@@ -133,10 +134,44 @@ extension HomeViewController : ListAdapterDataSource {
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return MovieSectionController()
+        let sectionController = MovieSectionController()
+        sectionController.delegate = self
+        return sectionController
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
+    }
+}
+
+extension HomeViewController: MovieSectionControllerDelegate {
+    func movieSectionControllerWantsDisplayMoreInfo(_ sectionController: MovieSectionController) {
+        let section = adapter.section(for: sectionController)
+        guard let movie = adapter.object(atSection: section) as? MovieModel else { return }
+        self.router?.routeToMovieDetail(movie: movie)
+    }
+}
+
+extension HomeViewController: FloatingPanelControllerDelegate {
+    func floatingPanel(_ vc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout? {
+        return CustomPanelLayout()
+    }
+}
+
+
+class CustomPanelLayout: FloatingPanelIntrinsicLayout {
+    public var initialPosition: FloatingPanelPosition {
+        return .half
+    }
+
+    var supportedPositions: Set<FloatingPanelPosition> {
+        return [.full, .half]
+    }
+
+    public func insetFor(position: FloatingPanelPosition) -> CGFloat? {
+        switch position {
+        case .half: return 300.0 // A bottom inset from the safe area
+        default: return nil // Or `case .hidden: return nil`
+        }
     }
 }

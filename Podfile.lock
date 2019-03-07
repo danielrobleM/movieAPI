@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.0.0-beta.2)
+  - FloatingPanel (1.4.0)
   - IGListKit (3.4.0):
     - IGListKit/Default (= 3.4.0)
   - IGListKit/Default (3.4.0):
@@ -12,6 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-beta.2)
+  - FloatingPanel
   - IGListKit (~> 3.0)
   - SDWebImage (~> 4.0)
   - SnapKit (~> 4.0.0)
@@ -19,16 +21,18 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - FloatingPanel
     - IGListKit
     - SDWebImage
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: d1e5493588babe3e7b56ae29e8032942f4de09fe
+  FloatingPanel: 1449e7c4b9994e394f2de685b2ad6dd93da06333
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: e55ba2ac1892a576c9c09541833020763f49ad4f
+PODFILE CHECKSUM: d3e2438e1b9c01c418e40a9c1704da9ef9e751f0
 
 COCOAPODS: 1.5.3

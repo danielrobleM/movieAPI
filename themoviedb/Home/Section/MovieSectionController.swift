@@ -10,7 +10,12 @@ import IGListKit
 import Foundation
 import SDWebImage
 
+protocol MovieSectionControllerDelegate: class {
+    func movieSectionControllerWantsDisplayMoreInfo(_ sectionController: MovieSectionController)
+}
+
 final class MovieSectionController: ListSectionController {
+    weak var delegate: MovieSectionControllerDelegate?
     private var movie: MovieModel?
     override init() {
         super.init()
@@ -39,11 +44,18 @@ extension MovieSectionController {
         cell.titleLabel.text = movie.title
         cell.releaseDateLabel.text = movie.releaseDate
         cell.voteAverageLabel.text = movie.voteAverage.description
+        cell.delegate = self
 
         if let url = movie.getImageURL() {
             cell.posterImageView.sd_setImage(with: url, completed: nil)
         }
 
         return cell
+    }
+}
+
+extension MovieSectionController: MovieCollectionViewDelegate {
+    func movieCellDidTapMoreInfoButton(_ cell: MovieCollectionViewCell) {
+        delegate?.movieSectionControllerWantsDisplayMoreInfo(self)
     }
 }
