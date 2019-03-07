@@ -16,6 +16,7 @@ protocol DetailMovieDisplayLogic: class {
     func presentUI(viewModel: DetailMovie.UI.ViewModel)
 }
 
+/// I dont have time to make Controller Presentation Transitions, sorry for that approach
 class DetailMovieViewController: UIViewController, DetailMovieDisplayLogic {
     var interactor: DetailMovieBusinessLogic?
     var router: (NSObjectProtocol & DetailMovieRoutingLogic & DetailMovieDataPassing)?
