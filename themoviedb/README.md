@@ -16,5 +16,3 @@ Consideraciones:
 - El código fuente debe quedar almacenado en un repositorio público para Git, el cual nos debes compartir.
 - Considerar el correcto uso de recursos para no sobrecargar la App
 
-## Install 
- `run pod install`
