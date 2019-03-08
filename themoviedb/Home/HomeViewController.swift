@@ -12,7 +12,6 @@
 
 import UIKit
 import IGListKit
-import FloatingPanel
 
 protocol HomeDisplayLogic: class {
     func displayUI(viewModel: Home.UI.ViewModel)
