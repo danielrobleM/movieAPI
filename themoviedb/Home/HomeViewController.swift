@@ -151,27 +151,3 @@ extension HomeViewController: MovieSectionControllerDelegate {
         self.router?.routeToMovieDetail(movie: movie)
     }
 }
-
-extension HomeViewController: FloatingPanelControllerDelegate {
-    func floatingPanel(_ vc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout? {
-        return CustomPanelLayout()
-    }
-}
-
-
-class CustomPanelLayout: FloatingPanelIntrinsicLayout {
-    public var initialPosition: FloatingPanelPosition {
-        return .half
-    }
-
-    var supportedPositions: Set<FloatingPanelPosition> {
-        return [.full, .half]
-    }
-
-    public func insetFor(position: FloatingPanelPosition) -> CGFloat? {
-        switch position {
-        case .half: return 300.0 // A bottom inset from the safe area
-        default: return nil // Or `case .hidden: return nil`
-        }
-    }
-}

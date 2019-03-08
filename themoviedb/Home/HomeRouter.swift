@@ -11,7 +11,6 @@
 //
 
 import UIKit
-import FloatingPanel
 
 @objc protocol HomeRoutingLogic {
     func routeToMovieDetail(movie: MovieModel)
@@ -29,14 +28,6 @@ class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     func routeToMovieDetail(movie: MovieModel) {
         let contentViewController = DetailMovieViewController()
         contentViewController.router?.dataStore?.movie = movie
-
-//        let floatVC = FloatingPanelController()
-//        floatVC.delegate = viewController!.self
-//
-//        floatVC.set(contentViewController: contentViewController)
-//
-//        //
-//        floatVC.isRemovalInteractionEnabled = true
 
         contentViewController.modalPresentationStyle = .overCurrentContext
 
